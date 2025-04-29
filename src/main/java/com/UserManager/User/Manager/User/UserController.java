@@ -2,13 +2,21 @@ package com.UserManager.User.Manager.User;
 
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/User")
 public class UserController {
 
+    private UserService service;
+
+    public UserController(UserService service) {
+        this.service = service;
+    }
+
     @GetMapping("/list_user")
-    public String listUser(){
-        return "LIST_USER";
+    public List<UserModel> listUser(){
+        return service.listUser();
     }
     @PostMapping("/add_user")
     public String addUser(){
