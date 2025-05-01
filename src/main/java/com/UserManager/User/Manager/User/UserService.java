@@ -27,4 +27,8 @@ public class UserService {
     public UserModel addUser(UserModel model){
         return repository.save(model);
     }
+
+    public void deleteUser(Long id){
+        repository.deleteById(id);
+    }
 }

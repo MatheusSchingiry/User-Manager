@@ -24,7 +24,7 @@ public class UserController {
         return service.listUserById(id);
     }
 
-    @PostMapping("/adduser")
+    @PostMapping("/add_user")
     public UserModel addUser(@RequestBody UserModel model){
         return service.addUser(model);
     }
@@ -33,8 +33,9 @@ public class UserController {
     public String editUser(){
         return "EDIT_USER";
     }
-    @DeleteMapping("/delete_user")
-    public String deleteUser(){
-        return "DELETE_USER";
+
+    @DeleteMapping("/delete_user/{id}")
+    public void deleteUser(@PathVariable Long id){
+        service.deleteUser(id);
     }
 }
