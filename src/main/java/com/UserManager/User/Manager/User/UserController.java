@@ -23,11 +23,12 @@ public class UserController {
     public UserModel listUserById(@PathVariable Long id){
         return service.listUserById(id);
     }
-
-    @PostMapping("/add_user")
-    public String addUser(){
-        return "ADD_USER";
+git
+    @PostMapping("/adduser")
+    public UserModel addUser(@RequestBody UserModel model){
+        return service.addUser(model);
     }
+
     @PutMapping("/edit_user")
     public String editUser(){
         return "EDIT_USER";

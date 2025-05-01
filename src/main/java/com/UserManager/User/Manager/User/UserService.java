@@ -23,4 +23,8 @@ public class UserService {
         Optional<UserModel> userbyId = repository.findById(id);
         return userbyId.orElse(null);
     }
+
+    public UserModel addUser(UserModel model){
+        return repository.save(model);
+    }
 }
