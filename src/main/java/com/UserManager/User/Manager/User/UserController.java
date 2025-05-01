@@ -23,7 +23,7 @@ public class UserController {
     public UserModel listUserById(@PathVariable Long id){
         return service.listUserById(id);
     }
-git
+
     @PostMapping("/adduser")
     public UserModel addUser(@RequestBody UserModel model){
         return service.addUser(model);
