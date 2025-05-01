@@ -31,4 +31,12 @@ public class UserService {
     public void deleteUser(Long id){
         repository.deleteById(id);
     }
+
+    public UserModel editUser(Long id, UserModel model){
+        if(repository.existsById(id)){
+            model.setId(id);
+            return repository.save(model);
+        }
+        return null;
+    }
 }

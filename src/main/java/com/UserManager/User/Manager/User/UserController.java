@@ -29,9 +29,9 @@ public class UserController {
         return service.addUser(model);
     }
 
-    @PutMapping("/edit_user")
-    public String editUser(){
-        return "EDIT_USER";
+    @PutMapping("/edit_user/{id}")
+    public UserModel editUser(@PathVariable Long id, @RequestBody UserModel model){
+        return service.editUser(id, model);
     }
 
     @DeleteMapping("/delete_user/{id}")
