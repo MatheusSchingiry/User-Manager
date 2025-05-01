@@ -15,23 +15,23 @@ public class UserController {
     }
 
     @GetMapping("/list_user")
-    public List<UserModel> listUser(){
+    public List<UserDTO> listUser(){
         return service.listUser();
     }
 
     @GetMapping("/list_user/{id}")
-    public UserModel listUserById(@PathVariable Long id){
+    public UserDTO listUserById(@PathVariable Long id){
         return service.listUserById(id);
     }
 
     @PostMapping("/add_user")
-    public UserModel addUser(@RequestBody UserModel model){
-        return service.addUser(model);
+    public UserDTO addUser(@RequestBody UserDTO dto){
+        return service.addUser(dto);
     }
 
     @PutMapping("/edit_user/{id}")
-    public UserModel editUser(@PathVariable Long id, @RequestBody UserModel model){
-        return service.editUser(id, model);
+    public UserDTO editUser(@PathVariable Long id, @RequestBody UserDTO dto){
+        return service.editUser(id, dto);
     }
 
     @DeleteMapping("/delete_user/{id}")

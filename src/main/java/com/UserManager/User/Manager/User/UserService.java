@@ -5,37 +5,48 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class UserService {
 
     private UserRepository repository;
+    public UserMapping mapping;
 
-    public UserService(UserRepository repository) {
+    public UserService(UserRepository repository, UserMapping mapping) {
         this.repository = repository;
+        this.mapping = mapping;
     }
 
-    public List<UserModel> listUser(){
-        return repository.findAll();
+    public List<UserDTO> listUser(){
+        List<UserModel> model = repository.findAll();
+        return model.stream()
+                .map(mapping::map)
+                .collect(Collectors.toList());
     }
 
-    public UserModel listUserById(Long id){
-        Optional<UserModel> userbyId = repository.findById(id);
-        return userbyId.orElse(null);
+    public UserDTO listUserById(Long id){
+        Optional<UserModel> model = repository.findById(id);
+        return model.map(mapping::map).orElse(null);
     }
 
-    public UserModel addUser(UserModel model){
-        return repository.save(model);
+    public UserDTO addUser(UserDTO dto){
+        UserModel model = mapping.map(dto);
+        model = repository.save(model);
+        return mapping.map(model);
     }
 
     public void deleteUser(Long id){
         repository.deleteById(id);
     }
 
-    public UserModel editUser(Long id, UserModel model){
-        if(repository.existsById(id)){
-            model.setId(id);
-            return repository.save(model);
+    public UserDTO editUser(Long id, UserDTO dto){
+        Optional<UserModel> model = repository.findById(id);
+        if(model.isPresent()){
+            dto.setId(id);
+            UserModel userModel = mapping.map(dto);
+            userModel = repository.save(userModel);
+            return mapping.map(userModel);
         }
         return null;
     }
