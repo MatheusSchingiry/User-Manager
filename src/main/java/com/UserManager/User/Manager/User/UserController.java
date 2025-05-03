@@ -1,5 +1,7 @@
 package com.UserManager.User.Manager.User;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -25,8 +27,10 @@ public class UserController {
     }
 
     @PostMapping("/add_user")
-    public UserDTO addUser(@RequestBody UserDTO dto){
-        return service.addUser(dto);
+    public ResponseEntity<String> addUser(@RequestBody UserDTO dto){
+        UserDTO newDto = service.addUser(dto);
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body("Registered Successfully (ID:" +newDto.getId() + ")");
     }
 
     @PutMapping("/edit_user/{id}")
@@ -35,7 +39,14 @@ public class UserController {
     }
 
     @DeleteMapping("/delete_user/{id}")
-    public void deleteUser(@PathVariable Long id){
-        service.deleteUser(id);
+    public ResponseEntity<String> deleteUser(@PathVariable Long id){
+        if(service.listUserById(id) != null){
+            service.deleteUser(id);
+            return ResponseEntity.ok("Successfully Deleted");
+        }
+        else{
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("Failed to Delete: Nonexistent ID");
+        }
     }
 }
