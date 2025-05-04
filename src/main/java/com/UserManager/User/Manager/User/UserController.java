@@ -17,13 +17,21 @@ public class UserController {
     }
 
     @GetMapping("/list_user")
-    public List<UserDTO> listUser(){
-        return service.listUser();
+    public ResponseEntity<List<UserDTO>> listUser(){
+        List<UserDTO> dto = service.listUser();
+        return ResponseEntity.ok(dto);
     }
 
     @GetMapping("/list_user/{id}")
-    public UserDTO listUserById(@PathVariable Long id){
-        return service.listUserById(id);
+    public ResponseEntity<?> listUserById(@PathVariable Long id){
+        UserDTO dto = service.listUserById(id);
+        if(dto != null){
+            return ResponseEntity.ok(dto);
+        }
+        else{
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("Failed to view: Nonexistent ID");
+        }
     }
 
     @PostMapping("/add_user")
@@ -34,8 +42,15 @@ public class UserController {
     }
 
     @PutMapping("/edit_user/{id}")
-    public UserDTO editUser(@PathVariable Long id, @RequestBody UserDTO dto){
-        return service.editUser(id, dto);
+    public ResponseEntity<String> editUser(@PathVariable Long id, @RequestBody UserDTO dto){
+        UserDTO userDto = service.editUser(id, dto);
+        if(userDto != null){
+            return ResponseEntity.ok("Successfully Changed");
+        }
+        else{
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("Failed to Change: Nonexistent ID");
+        }
     }
 
     @DeleteMapping("/delete_user/{id}")
