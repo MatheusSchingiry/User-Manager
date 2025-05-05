@@ -43,6 +43,18 @@ public class UserService {
     public UserDTO editUser(Long id, UserDTO dto){
         Optional<UserModel> model = repository.findById(id);
         if(model.isPresent()){
+            UserModel existingUser = model.get();
+
+            if (dto.getName() == null) {
+                dto.setName(existingUser.getName());
+            }
+            if (dto.getEmail() == null) {
+                dto.setEmail(existingUser.getEmail());
+            }
+            if (dto.getPassword() == null) {
+                dto.setPassword(existingUser.getPassword());
+            }
+
             dto.setId(id);
             UserModel userModel = mapping.map(dto);
             userModel = repository.save(userModel);
