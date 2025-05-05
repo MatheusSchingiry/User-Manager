@@ -10,8 +10,8 @@ import java.util.stream.Collectors;
 @Service
 public class UserService {
 
-    private UserRepository repository;
-    public UserMapping mapping;
+    private final UserRepository repository;
+    public final UserMapping mapping;
 
     public UserService(UserRepository repository, UserMapping mapping) {
         this.repository = repository;
