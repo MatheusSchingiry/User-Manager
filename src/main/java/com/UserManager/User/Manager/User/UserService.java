@@ -1,6 +1,5 @@
 package com.UserManager.User.Manager.User;
 
-import org.apache.catalina.User;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -25,7 +24,7 @@ public class UserService {
                 .collect(Collectors.toList());
     }
 
-    public UserDTO listUserById(Long id){
+    public UserDTO listUserById(String id){
         Optional<UserModel> model = repository.findById(id);
         return model.map(mapping::map).orElse(null);
     }
@@ -36,11 +35,11 @@ public class UserService {
         return mapping.map(model);
     }
 
-    public void deleteUser(Long id){
+    public void deleteUser(String id){
         repository.deleteById(id);
     }
 
-    public UserDTO editUser(Long id, UserDTO dto){
+    public UserDTO editUser(String id, UserDTO dto){
         Optional<UserModel> model = repository.findById(id);
         if(model.isPresent()){
             UserModel existingUser = model.get();

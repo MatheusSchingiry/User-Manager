@@ -23,7 +23,7 @@ public class UserController {
     }
 
     @GetMapping("/list_user/{id}")
-    public ResponseEntity<?> listUserById(@PathVariable Long id){
+    public ResponseEntity<?> listUserById(@PathVariable String id){
         UserDTO dto = service.listUserById(id);
         if(dto != null){
             return ResponseEntity.ok(dto);
@@ -42,7 +42,7 @@ public class UserController {
     }
 
     @PutMapping("/edit_user/{id}")
-    public ResponseEntity<String> editUser(@PathVariable Long id, @RequestBody UserDTO dto){
+    public ResponseEntity<String> editUser(@PathVariable String id, @RequestBody UserDTO dto){
         UserDTO userDto = service.editUser(id, dto);
         if(userDto != null){
             return ResponseEntity.ok("Successfully Changed");
@@ -54,7 +54,7 @@ public class UserController {
     }
 
     @DeleteMapping("/delete_user/{id}")
-    public ResponseEntity<String> deleteUser(@PathVariable Long id){
+    public ResponseEntity<String> deleteUser(@PathVariable String id){
         if(service.listUserById(id) != null){
             service.deleteUser(id);
             return ResponseEntity.ok("Successfully Deleted");
