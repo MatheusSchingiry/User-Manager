@@ -16,9 +16,9 @@ public class AuthService {
     private final PasswordEncoder passwordEncoder;
     private final TokenService tokenService;
     private final UserService userService;
-    private final UserMapping userMapping;
+    private final UserMapper userMapping;
 
-    public AuthService(UserRepository userRepository, PasswordEncoder passwordEncoder, TokenService tokenService, UserService userService, UserMapping userMapping) {
+    public AuthService(UserRepository userRepository, PasswordEncoder passwordEncoder, TokenService tokenService, UserService userService, UserMapper userMapping) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.tokenService = tokenService;
@@ -44,7 +44,7 @@ public class AuthService {
             newUser.setEmail(dto.getEmail());
             newUser.setPassword(passwordEncoder.encode(dto.getPassword()));
 
-            UserDTO userDTO = userMapping.map(newUser);
+            UserDTO userDTO = userMapping.toDTO(newUser);
 
             userService.addUser(userDTO);
 

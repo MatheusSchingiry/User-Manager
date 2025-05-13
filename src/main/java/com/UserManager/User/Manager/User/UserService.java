@@ -10,9 +10,9 @@ import java.util.stream.Collectors;
 public class UserService {
 
     private final UserRepository repository;
-    public final UserMapping mapping;
+    public final UserMapper mapping;
 
-    public UserService(UserRepository repository, UserMapping mapping) {
+    public UserService(UserRepository repository, UserMapper mapping) {
         this.repository = repository;
         this.mapping = mapping;
     }
@@ -20,19 +20,19 @@ public class UserService {
     public List<UserDTO> listUser(){
         List<UserModel> model = repository.findAll();
         return model.stream()
-                .map(mapping::map)
+                .map(mapping::toDTO)
                 .collect(Collectors.toList());
     }
 
     public UserDTO listUserById(String id){
         Optional<UserModel> model = repository.findById(id);
-        return model.map(mapping::map).orElse(null);
+        return model.map(mapping::toDTO).orElse(null);
     }
 
     public UserDTO addUser(UserDTO dto){
-        UserModel model = mapping.map(dto);
+        UserModel model = mapping.toModel(dto);
         model = repository.save(model);
-        return mapping.map(model);
+        return mapping.toDTO(model);
     }
 
     public void deleteUser(String id){
@@ -55,9 +55,9 @@ public class UserService {
             }
 
             dto.setId(id);
-            UserModel userModel = mapping.map(dto);
+            UserModel userModel = mapping.toModel(dto);
             userModel = repository.save(userModel);
-            return mapping.map(userModel);
+            return mapping.toDTO(userModel);
         }
         return null;
     }
