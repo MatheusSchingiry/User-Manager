@@ -1,5 +1,6 @@
 package com.UserManager.User.Manager.User;
 
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,7 +17,7 @@ public class UserController {
     }
 
     @GetMapping("/list_user")
-    public ResponseEntity<List<UserDTO>> listUser(){
+    public ResponseEntity<@Valid List<UserDTO>> listUser(){
         List<UserDTO> dto = service.listUser();
         return ResponseEntity.ok(dto);
     }
@@ -34,14 +35,14 @@ public class UserController {
     }
 
     @PostMapping("/add_user")
-    public ResponseEntity<String> addUser(@RequestBody UserDTO dto){
+    public ResponseEntity<String> addUser(@Valid @RequestBody UserDTO dto){
         UserDTO newDto = service.addUser(dto);
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body("Registered Successfully (ID:" +newDto.getId() + ")");
     }
 
     @PutMapping("/edit_user/{id}")
-    public ResponseEntity<String> editUser(@PathVariable String id, @RequestBody UserDTO dto){
+    public ResponseEntity<String> editUser(@PathVariable String id, @Valid @RequestBody UserDTO dto){
         UserDTO userDto = service.editUser(id, dto);
         if(userDto != null){
             return ResponseEntity.ok("Successfully Changed");

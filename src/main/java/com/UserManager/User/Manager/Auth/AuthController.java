@@ -3,6 +3,7 @@ package com.UserManager.User.Manager.Auth;
 import com.UserManager.User.Manager.Infra.Security.TokenService;
 import com.UserManager.User.Manager.User.UserDTO;
 import com.UserManager.User.Manager.User.UserRepository;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
@@ -29,7 +30,7 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody LoginDTO dto){
+    public ResponseEntity<?> login(@Valid  @RequestBody LoginDTO dto){
         ResponseDTO responseDTO = authService.login(dto);
         if(responseDTO != null){
             return ResponseEntity.ok(responseDTO);
@@ -41,7 +42,7 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<?> register(@RequestBody RegisterDTO dto){
+    public ResponseEntity<?> register(@Valid @RequestBody RegisterDTO dto){
         ResponseDTO responseDTO = authService.register(dto);
         if(responseDTO != null){
             return ResponseEntity.ok(responseDTO);
