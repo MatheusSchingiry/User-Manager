@@ -1,5 +1,7 @@
 package com.UserManager.User.Manager.Auth;
 
+import com.UserManager.User.Manager.Exception.InvalidCredentialsException;
+import com.UserManager.User.Manager.Exception.UserAlreadyExistsException;
 import com.UserManager.User.Manager.Infra.Security.TokenService;
 import com.UserManager.User.Manager.User.*;
 import org.springframework.http.ResponseEntity;
@@ -27,30 +29,35 @@ public class AuthService {
     }
 
     public ResponseDTO login(LoginDTO dto){
-        UserModel user = userRepository.findByEmail(dto.getEmail()).orElse(null);
+        UserModel user = userRepository.findByEmail(dto.getEmail()).orElseThrow(() -> new InvalidCredentialsException("Credentials Invalid"));
 
         if(passwordEncoder.matches(dto.getPassword(), user.getPassword())){
             String token = tokenService.generateToken(user);
             return new ResponseDTO(user.getName(), token);
         }
-        else { return null; }
+        else { throw new InvalidCredentialsException("Invalid email or password");
+        }
     }
 
     public ResponseDTO register(RegisterDTO dto){
         Optional<UserModel> user = userRepository.findByEmail(dto.getEmail());
-        if(user.isEmpty()){
-            UserModel newUser = new UserModel();
-            newUser.setName(dto.getName());
-            newUser.setEmail(dto.getEmail());
-            newUser.setPassword(passwordEncoder.encode(dto.getPassword()));
-
-            UserDTO userDTO = userMapping.toDTO(newUser);
-
-            userService.addUser(userDTO);
-
-            String token = tokenService.generateToken(newUser);
-            return new ResponseDTO(newUser.getName(), token);
+        if(user.isPresent()){
+            throw new UserAlreadyExistsException("Email is already in use");
         }
-        return null;
+
+        UserModel newUser = creationUserFromDTO(dto);
+        userService.addUser(userMapping.toDTO(newUser));
+
+        String token = tokenService.generateToken(newUser);
+        return new ResponseDTO(newUser.getName(), token);
+    }
+
+    private UserModel creationUserFromDTO(RegisterDTO dto){
+        UserModel newUser = new UserModel();
+        newUser.setName(dto.getName());
+        newUser.setEmail(dto.getEmail());
+        newUser.setPassword(passwordEncoder.encode(dto.getPassword()));
+
+        return newUser;
     }
 }

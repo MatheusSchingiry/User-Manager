@@ -1,9 +1,10 @@
 package com.UserManager.User.Manager.User;
 
+
+import com.UserManager.User.Manager.Exception.UserNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -18,15 +19,13 @@ public class UserService {
     }
 
     public List<UserDTO> listUser(){
-        List<UserModel> model = repository.findAll();
-        return model.stream()
+        return repository.findAll().stream()
                 .map(mapping::toDTO)
                 .collect(Collectors.toList());
     }
 
     public UserDTO listUserById(String id){
-        Optional<UserModel> model = repository.findById(id);
-        return model.map(mapping::toDTO).orElse(null);
+        return repository.findById(id).map(mapping::toDTO).orElseThrow(() -> new UserNotFoundException("User not found with ID: " + id));
     }
 
     public UserDTO addUser(UserDTO dto){
@@ -40,25 +39,15 @@ public class UserService {
     }
 
     public UserDTO editUser(String id, UserDTO dto){
-        Optional<UserModel> model = repository.findById(id);
-        if(model.isPresent()){
-            UserModel existingUser = model.get();
+        UserModel existingUser = repository.findById(id)
+                .orElseThrow(() -> new UserNotFoundException("User not found with ID: " + id));
 
-            if (dto.getName() == null) {
-                dto.setName(existingUser.getName());
-            }
-            if (dto.getEmail() == null) {
-                dto.setEmail(existingUser.getEmail());
-            }
-            if (dto.getPassword() == null) {
-                dto.setPassword(existingUser.getPassword());
-            }
+        if (dto.getName() == null) dto.setName(existingUser.getName());
+        if (dto.getEmail() == null) dto.setEmail(existingUser.getEmail());
+        if (dto.getPassword() == null) dto.setPassword(existingUser.getPassword());
 
-            dto.setId(id);
-            UserModel userModel = mapping.toModel(dto);
-            userModel = repository.save(userModel);
-            return mapping.toDTO(userModel);
-        }
-        return null;
+        dto.setId(id);
+        UserModel updatedUser = repository.save(mapping.toModel(dto));
+        return mapping.toDTO(updatedUser);
     }
 }
