@@ -30,7 +30,7 @@ public class UserController {
     @PostMapping("/add_user")
     public ResponseEntity<String> addUser(@Valid @RequestBody UserDTO dto){
         UserDTO newUser = service.addUser(dto);
-        return ResponseEntity.status(201).body("Registered Successfully (ID: " + newUser.getId() + ")");
+        return ResponseEntity.status(201).body("Registered Successfully");
     }
 
     @PutMapping("/edit_user/{id}")
