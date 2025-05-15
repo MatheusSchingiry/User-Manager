@@ -17,38 +17,21 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/auth")
 public class AuthController {
 
-    private final UserRepository userRepository;
-    private final PasswordEncoder passwordEncoder;
-    private final TokenService tokenService;
     private final AuthService authService;
 
-    public AuthController(UserRepository userRepository, PasswordEncoder passwordEncoder, TokenService tokenService, AuthService authService) {
-        this.userRepository = userRepository;
-        this.passwordEncoder = passwordEncoder;
-        this.tokenService = tokenService;
+    public AuthController(AuthService authService) {
         this.authService = authService;
     }
 
     @PostMapping("/login")
-    public ResponseEntity<?> login(@Valid  @RequestBody LoginDTO dto){
+    public ResponseEntity<ResponseDTO> login(@Valid  @RequestBody LoginDTO dto){
         ResponseDTO responseDTO = authService.login(dto);
-        if(responseDTO != null){
-            return ResponseEntity.ok(responseDTO);
-        }
-        else{
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body("Email or User Incorrect");
-        }
+        return ResponseEntity.ok(responseDTO);
     }
 
     @PostMapping("/register")
-    public ResponseEntity<?> register(@Valid @RequestBody RegisterDTO dto){
+    public ResponseEntity<ResponseDTO> register(@Valid @RequestBody RegisterDTO dto){
         ResponseDTO responseDTO = authService.register(dto);
-        if(responseDTO != null){
-            return ResponseEntity.ok(responseDTO);
-        }
-        else{
-            return ResponseEntity.badRequest().build();
-        }
+        return ResponseEntity.status(201).body(responseDTO);
     }
 }

@@ -18,50 +18,30 @@ public class UserController {
 
     @GetMapping("/list_user")
     public ResponseEntity<@Valid List<UserDTO>> listUser(){
-        List<UserDTO> dto = service.listUser();
-        return ResponseEntity.ok(dto);
+        return ResponseEntity.ok(service.listUser());
     }
 
     @GetMapping("/list_user/{id}")
     public ResponseEntity<?> listUserById(@PathVariable String id){
         UserDTO dto = service.listUserById(id);
-        if(dto != null){
-            return ResponseEntity.ok(dto);
-        }
-        else{
-            return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body("Failed to view: Nonexistent ID");
-        }
+        return ResponseEntity.ok(dto);
     }
 
     @PostMapping("/add_user")
     public ResponseEntity<String> addUser(@Valid @RequestBody UserDTO dto){
-        UserDTO newDto = service.addUser(dto);
-        return ResponseEntity.status(HttpStatus.CREATED)
-                .body("Registered Successfully (ID:" +newDto.getId() + ")");
+        UserDTO newUser = service.addUser(dto);
+        return ResponseEntity.status(201).body("Registered Successfully (ID: " + newUser.getId() + ")");
     }
 
     @PutMapping("/edit_user/{id}")
     public ResponseEntity<String> editUser(@PathVariable String id, @Valid @RequestBody UserDTO dto){
-        UserDTO userDto = service.editUser(id, dto);
-        if(userDto != null){
-            return ResponseEntity.ok("Successfully Changed");
-        }
-        else{
-            return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body("Failed to Change: Nonexistent ID");
-        }
+        service.editUser(id, dto);
+        return ResponseEntity.ok("Successfully Updated");
     }
 
     @DeleteMapping("/delete_user/{id}")
     public ResponseEntity<String> deleteUser(@PathVariable String id){
-        if(service.listUserById(id) != null){
-            service.deleteUser(id);
-            return ResponseEntity.ok("Successfully Deleted");
-        }
-        else{
-            return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body("Failed to Delete: Nonexistent ID");
-        }
+        service.deleteUser(id);
+        return ResponseEntity.ok("Successfully Deleted");
     }
 }
