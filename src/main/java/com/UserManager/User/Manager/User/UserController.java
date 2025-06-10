@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin(origins = "http://127.0.0.1:5500")
 @RestController
 @RequestMapping("/user")
 public class UserController {
@@ -21,9 +22,9 @@ public class UserController {
         return ResponseEntity.ok(service.listUser());
     }
 
-    @GetMapping("/list_user/{id}")
-    public ResponseEntity<?> listUserById(@PathVariable String id){
-        UserDTO dto = service.listUserById(id);
+    @GetMapping("/list_user/{email}")
+    public ResponseEntity<?> listUserById(@PathVariable String email){
+        UserDTO dto = service.listUserByEmail(email);
         return ResponseEntity.ok(dto);
     }
 
