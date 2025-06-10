@@ -24,8 +24,8 @@ public class UserService {
                 .collect(Collectors.toList());
     }
 
-    public UserDTO listUserById(String id){
-        return repository.findById(id).map(mapping::toDTO).orElseThrow(() -> new UserNotFoundException("User not found with ID: " + id));
+    public UserDTO listUserByEmail(String email){
+        return repository.findByEmail(email).map(mapping::toDTO).orElseThrow(() -> new UserNotFoundException("User not found with ID: " + email));
     }
 
     public UserDTO addUser(UserDTO dto){
