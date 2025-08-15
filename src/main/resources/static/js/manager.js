@@ -44,6 +44,7 @@ async function loadUsers() {
 }
 
 async function deleteUser(id) {
+    console.log("Passou aqui");
     if (!confirm("Do you really want to delete this user?")) return;
 
     const res = await fetch(`${API_URL}/user/delete_user/${id}`, {
