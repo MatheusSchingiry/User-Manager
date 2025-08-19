@@ -1,4 +1,4 @@
-package com.UserManager.User.Manager.User;
+package com.UserManager.User.Manager.DTO;
 
 public class UserResponseDTO {
 

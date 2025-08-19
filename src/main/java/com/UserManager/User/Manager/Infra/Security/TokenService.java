@@ -1,7 +1,6 @@
 package com.UserManager.User.Manager.Infra.Security;
 
-import com.UserManager.User.Manager.User.UserDTO;
-import com.UserManager.User.Manager.User.UserModel;
+import com.UserManager.User.Manager.Entity.UserModel;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTCreationException;

@@ -1,7 +1,7 @@
 package com.UserManager.User.Manager.Infra.Security;
 
-import com.UserManager.User.Manager.User.UserModel;
-import com.UserManager.User.Manager.User.UserRepository;
+import com.UserManager.User.Manager.Entity.UserModel;
+import com.UserManager.User.Manager.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

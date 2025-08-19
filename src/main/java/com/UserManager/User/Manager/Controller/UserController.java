@@ -1,7 +1,8 @@
-package com.UserManager.User.Manager.User;
+package com.UserManager.User.Manager.Controller;
 
+import com.UserManager.User.Manager.DTO.UserDTO;
+import com.UserManager.User.Manager.Service.UserService;
 import jakarta.validation.Valid;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

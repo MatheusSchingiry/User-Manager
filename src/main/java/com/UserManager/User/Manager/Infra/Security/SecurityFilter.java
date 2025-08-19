@@ -1,7 +1,7 @@
 package com.UserManager.User.Manager.Infra.Security;
 
-import com.UserManager.User.Manager.User.UserModel;
-import com.UserManager.User.Manager.User.UserRepository;
+import com.UserManager.User.Manager.Entity.UserModel;
+import com.UserManager.User.Manager.Repository.UserRepository;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -29,10 +29,10 @@ public class SecurityFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
 
-        if ("OPTIONS".equalsIgnoreCase(request.getMethod())) {
-            filterChain.doFilter(request, response);
-            return;
-        }
+//        if ("OPTIONS".equalsIgnoreCase(request.getMethod())) {
+//            filterChain.doFilter(request, response);
+//            return;
+//        }
 
         var token = this.recoverytoken(request);
 

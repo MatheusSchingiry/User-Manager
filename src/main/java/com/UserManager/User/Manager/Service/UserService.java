@@ -1,7 +1,10 @@
-    package com.UserManager.User.Manager.User;
+    package com.UserManager.User.Manager.Service;
 
-
+    import com.UserManager.User.Manager.DTO.UserDTO;
+    import com.UserManager.User.Manager.Entity.UserModel;
     import com.UserManager.User.Manager.Exception.UserNotFoundException;
+    import com.UserManager.User.Manager.Mapper.UserMapper;
+    import com.UserManager.User.Manager.Repository.UserRepository;
     import org.springframework.stereotype.Service;
 
     import java.util.List;

@@ -1,21 +1,16 @@
-package com.UserManager.User.Manager.User;
+package com.UserManager.User.Manager.DTO;
 
-import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Entity
-@Table(name = "tb_user")
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class UserModel {
+public class UserDTO {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
 
     @NotBlank
@@ -23,9 +18,7 @@ public class UserModel {
 
     @Email
     @NotBlank
-    @Column(nullable = false, unique = true)
     private String email;
 
-    @NotBlank
     private String password;
 }

@@ -1,13 +1,16 @@
-package com.UserManager.User.Manager.Auth;
+package com.UserManager.User.Manager.Service;
 
+import com.UserManager.User.Manager.DTO.LoginDTO;
+import com.UserManager.User.Manager.DTO.RegisterDTO;
+import com.UserManager.User.Manager.DTO.ResponseDTO;
+import com.UserManager.User.Manager.Entity.UserModel;
 import com.UserManager.User.Manager.Exception.InvalidCredentialsException;
 import com.UserManager.User.Manager.Exception.UserAlreadyExistsException;
 import com.UserManager.User.Manager.Infra.Security.TokenService;
-import com.UserManager.User.Manager.User.*;
-import org.springframework.http.ResponseEntity;
+import com.UserManager.User.Manager.Mapper.UserMapper;
+import com.UserManager.User.Manager.Repository.UserRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.Optional;
 

@@ -1,4 +1,4 @@
-package com.UserManager.User.Manager.User;
+package com.UserManager.User.Manager.DTO;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -9,16 +9,15 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class UserDTO {
-
-    private String id;
+public class RegisterDTO {
 
     @NotBlank
     private String name;
 
-    @Email
     @NotBlank
+    @Email
     private String email;
 
+    @NotBlank
     private String password;
 }

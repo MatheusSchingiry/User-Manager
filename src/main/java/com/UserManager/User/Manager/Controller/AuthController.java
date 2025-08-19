@@ -1,13 +1,11 @@
-package com.UserManager.User.Manager.Auth;
+package com.UserManager.User.Manager.Controller;
 
-import com.UserManager.User.Manager.Infra.Security.TokenService;
-import com.UserManager.User.Manager.User.UserDTO;
-import com.UserManager.User.Manager.User.UserRepository;
+import com.UserManager.User.Manager.DTO.LoginDTO;
+import com.UserManager.User.Manager.DTO.RegisterDTO;
+import com.UserManager.User.Manager.DTO.ResponseDTO;
+import com.UserManager.User.Manager.Service.AuthService;
 import jakarta.validation.Valid;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 @CrossOrigin(origins = "http://127.0.0.1:5500")

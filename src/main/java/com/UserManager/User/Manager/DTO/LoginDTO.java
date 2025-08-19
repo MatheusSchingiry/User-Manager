@@ -1,4 +1,4 @@
-package com.UserManager.User.Manager.Auth;
+package com.UserManager.User.Manager.DTO;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;

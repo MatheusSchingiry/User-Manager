@@ -1,5 +1,6 @@
-package com.UserManager.User.Manager.User;
+package com.UserManager.User.Manager.Repository;
 
+import com.UserManager.User.Manager.Entity.UserModel;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
