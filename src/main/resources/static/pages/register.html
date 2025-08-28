@@ -1,23 +1,178 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register</title>
-    <link rel="icon" href="data:;base64,iVBORw0KGgo=">
-    <link rel="stylesheet" href="../styles/style.css">
+    <title>Criar Nova Conta</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #00796b;
+        }
+
+        .form-container {
+            background-color: #dadada;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+            backdrop-filter: blur(8.5px);
+            -webkit-backdrop-filter: blur(8.5px);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            text-align: center;
+            width: 350px;
+        }
+        
+        .header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .back-button {
+            background: none;
+            border: 0px solid #ccc;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            margin-right: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0;
+            transition: background-color 0.2s;
+        }
+
+        .back-button:hover {
+            background-color: #f0f0f0;
+        }
+
+        .back-button svg {
+            width: 20px;
+            height: 20px;
+            color: #333;
+        }
+        
+        h1 {
+            color: #333;
+            font-size: 24px;
+            margin: 0;
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 12px 0;
+            margin-bottom: 20px;
+            border: none;
+            border-bottom: 2px solid #ccc;
+            background-color: transparent;
+            font-size: 16px;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        .input-field:focus {
+            border-bottom-color: #6a5acd;
+        }
+
+        .buttons-group {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-top: 30px;
+        }
+        
+        button {
+            padding: 15px 25px;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .btn-save {
+            background-color: #00897b;
+            color: white;
+        }
+
+        .btn-save:hover {
+            background-color: #00796b;
+        }
+        
+        .btn-clear {
+            background-color: #f0f0f0;
+            color: #333;
+        }
+
+        .btn-clear:hover {
+            background-color: #e0e0e0;
+        }
+
+        .input-group {
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .input-group i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #555;
+        }
+
+        input[type="email"], input[type="password"], input[type="text"] {
+            width: calc(100% - 40px);
+            padding: 15px 20px 15px 45px;
+            border: none;
+            border-radius: 10px;
+            background-color: rgba(255, 255, 255, 0.8);
+            color: #333;
+            font-size: 16px;
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 </head>
 <body>
-    <h1>user Manager</h1>
-
-    <form id="registerForm">
-        <input type="text" placeholder="name" id="name">
-        <input type="email" placeholder="email" id="email">
-        <input type="password" placeholder="password" id="password">
-        <button type="submit" id="send">Send</button>
-    </form>
-    <a href="../index.html"><button id="send">Back</button></a>
-
-    <script src="../js/register.js"></script>
+    <div class="form-container">
+        <div class="header">
+            <a href="../index.html">
+            <button class="back-button" title="Voltar">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <line x1="19" y1="12" x2="5" y2="12"></line>
+                  <polyline points="12 19 5 12 12 5"></polyline>
+                </svg>
+            </button>
+            </a>
+            <h1>Criar nova conta</h1>
+        </div>
+        <form id="registerForm">
+            <div class="input-group">
+                <i class="fas fa-user"></i>
+                <input type="text" id="name" placeholder="Nome" required>
+            </div>
+            <div class="input-group">
+                <i class="fas fa-envelope"></i>
+                <input type="email" id="email" placeholder="Email" required>
+            </div>
+            <div class="input-group">
+                <i class="fas fa-lock"></i>
+                <input type="password" id="password" placeholder="Nova senha (no mínimo 6 caracteres)" required>
+            </div>
+            
+            <div class="buttons-group">
+                <button type="reset" class="btn-clear">Limpar</button>
+                <button type="submit" class="btn-save">Salvar</button>
+            </div>
+        </form>
+    </div>
+<script src="../js/register.js"></script>
 </body>
 </html>

@@ -1,22 +1,157 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
-    <link rel="icon" href="data:;base64,iVBORw0KGgo=">
-    <link rel="stylesheet" href="styles/style.css">
+    <title>Página de Login</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: url('https://i.pinimg.com/originals/b3/89/2a/b3892a3928c04a990526013145a3233c.jpg') no-repeat center center/cover;
+            background-color: #00796b;
+        }
+
+        .login-container {
+            background-color: #dadada;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+            backdrop-filter: blur(8.5px);
+            -webkit-backdrop-filter: blur(8.5px);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            text-align: center;
+            width: 350px;
+        }
+
+        .profile-icon {
+            background-color: #333;
+            color: #fff;
+            border-radius: 50%;
+            width: 80px;
+            height: 80px;
+            margin: -80px auto 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 40px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .input-group {
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .input-group i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #555;
+        }
+
+        input[type="email"], input[type="password"] {
+            width: calc(100% - 40px);
+            padding: 15px 20px 15px 45px;
+            border: none;
+            border-radius: 10px;
+            background-color: rgba(255, 255, 255, 0.8);
+            color: #333;
+            font-size: 16px;
+        }
+
+        .options {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            color: #000000;
+            font-size: 14px;
+        }
+
+        .options label {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .options input[type="checkbox"] {
+            margin-right: 5px;
+        }
+
+        .options a {
+            color: #000000;
+            text-decoration: none;
+        }
+
+        .options a:hover {
+            text-decoration: underline;
+        }
+
+        button {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 10px;
+            background-color: #00897b;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #00796b;
+        }
+
+        .create-account-link {
+            margin-top: 20px;
+        }
+
+        .create-account-link a {
+            color: #00897b;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .create-account-link a:hover {
+            text-decoration: underline;
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 </head>
 <body>
-    <h1>User Manager</h1>
 
+<div class="login-container">
+    <div class="profile-icon">
+        <i class="fas fa-user"></i>
+    </div>
     <form id="loginForm">
-        <input type="email" placeholder="email" id="email">
-        <input type="password" placeholder="password" id="password">
-        <button type="submit" id="enter">Enter</button>
+        <div class="input-group">
+            <i class="fas fa-envelope"></i>
+            <input type="email" id="email" placeholder="Email" required>
+        </div>
+        <div class="input-group">
+            <i class="fas fa-lock"></i>
+            <input type="password" id="password" placeholder="Password" required>
+        </div>
+        <div class="options">
+            <label>
+                <input type="checkbox" name="remember"> Lembrar-me
+            </label>
+            <a href="#">Esqueci minha senha</a>
+        </div>
+            <button type="submit">LOGIN</button>
+        <div class="create-account-link">
+            <p>Não tem uma conta? <a href="pages/register.html">Criar conta</a></p>
+        </div>
     </form>
-    <a href="pages/register.html"><button id="creat">Create a Account</button></a>
-
-    <script src="js/login.js"></script>
+</div>
+<script src="js/login.js"></script>
 </body>
 </html>

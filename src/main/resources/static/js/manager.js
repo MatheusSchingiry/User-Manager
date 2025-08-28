@@ -11,93 +11,66 @@ const headers = {
     "Content-Type": "application/json"
 };
 
-async function loadUsers() {
-    const res = await fetch(`${API_URL}/user/list_user`, { headers });
+async function loadUsers(filter = {}) {
+    let url = `${API_URL}/user/list_user`;
+    // If you have filter endpoints, adjust here
+    if (filter.nameCpf || filter.status) {
+        url += `?`;
+        if (filter.nameCpf) url += `nameCpf=${encodeURIComponent(filter.nameCpf)}&`;
+        if (filter.status && filter.status !== "Selecione") url += `status=${encodeURIComponent(filter.status)}`;
+    }
 
+    const res = await fetch(url, { headers });
     if (!res.ok) {
         alert("Erro ao carregar usuários.");
         return;
     }
-
     const users = await res.json();
-    const list = document.getElementById("userList");
-    list.innerHTML = "";
+    renderTable(users);
+}
 
+function renderTable(users) {
+    const tbody = document.getElementById("userTable");
+    tbody.innerHTML = "";
     users.forEach(user => {
-        const li = document.createElement("li");
-        li.textContent = `${user.name} (${user.email}) `;
-
-        const btnEdit = document.createElement("button");
-        btnEdit.textContent = "Editar";
-        btnEdit.addEventListener("click", () => loadEditUser(user.id, user.name, user.email));
-
-        const btnDelete = document.createElement("button");
-        btnDelete.textContent = "Deletar";
-        btnDelete.addEventListener("click", () => deleteUser(user.id));
-
-        li.appendChild(btnEdit);
-        li.appendChild(document.createTextNode(" "));
-        li.appendChild(btnDelete);
-
-        list.appendChild(li);
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+            <td>${user.name}</td>
+            <td>${user.email}</td>
+            <td class="${user.status === "Ativo" ? "status-ativo" : ""}">${user.status}</td>
+            <td class="action-btns">
+                <button title="Editar" class="btn-edit" onclick="editUser('${user.id}', '${user.name}', '${user.cpf}', '${user.status}')">&#9998;</button>
+                <button title="Excluir" class="btn-delete" onclick="deleteUser('${user.id}')">&#128465;</button>
+            </td>
+        `;
+        tbody.appendChild(tr);
     });
 }
 
-async function deleteUser(id) {
-    console.log("Passou aqui");
+window.deleteUser = async function(id) {
     if (!confirm("Do you really want to delete this user?")) return;
-
     const res = await fetch(`${API_URL}/user/delete_user/${id}`, {
         method: "DELETE",
         headers
     });
-
     if (!res.ok) {
         alert("Erro ao deletar usuário.");
         return;
     }
-
     loadUsers();
-}
+};
 
-function loadEditUser(id, name, email) {
-    document.getElementById("editId").value = id;
-    document.getElementById("editName").value = name;
-    document.getElementById("editEmail").value = email;
-}
+window.editUser = function(id, name, cpf, status) {
+    // Implement your edit modal or form logic here
+    alert(`Edit user: ${name} (${cpf})`);
+    // Example: openEditModal(id, name, cpf, status);
+};
 
-document.getElementById("editForm").addEventListener("submit", async (e) => {
-    e.preventDefault();
-    const id = document.getElementById("editId").value;
-    const name = document.getElementById("editName").value;
-    const email = document.getElementById("editEmail").value;
-
-    const res = await fetch(`${API_URL}/user/edit_user/${id}`, {
-        method: "PUT",
-        headers,
-        body: JSON.stringify({ name, email })
-    });
-
-    if (!res.ok) {
-        alert("Erro ao editar usuário.");
-        return;
-    }
-
-    loadUsers();
-});
-
-document.getElementById("searchForm").addEventListener("submit", async (e) => {
-    e.preventDefault();
-    const id = document.getElementById("searchEmail").value;
-
-    const res = await fetch(`${API_URL}/user/list_user/${id}`, { headers });
-
-    if (res.ok) {
-        const user = await res.json();
-        alert(`User found: ${user.name} (${user.email})`);
-    } else {
-        alert("User not found.");
-    }
-});
+//document.getElementById("filterForm").addEventListener("submit", function(e) {
+//    e.preventDefault();
+//    const nameCpf = document.getElementById("filterNameCpf").value;
+//    const status = document.getElementById("filterStatus").value;
+//    loadUsers({ nameCpf, status });
+//});
 
 loadUsers();
