@@ -18,8 +18,6 @@ public class TokenService {
     @Value("${api.security.token}")
     private String key;
 
-
-    //Cria token criptografado
     public String generateToken(UserModel dto){
         try{
             Algorithm algorithm = Algorithm.HMAC256(key);
@@ -36,8 +34,6 @@ public class TokenService {
 
     }
 
-
-    //Descriptografador o token
     public String validateToken(String token){
         try {
             Algorithm algorithm = Algorithm.HMAC256(key);
@@ -52,7 +48,6 @@ public class TokenService {
         }
     }
 
-    //Gera um tempo de expiração para o token
     private Instant generateExcpetionDate(){
         return LocalDateTime.now()
                 .plusHours(2)

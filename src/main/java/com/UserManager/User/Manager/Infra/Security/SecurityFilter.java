@@ -28,36 +28,17 @@ public class SecurityFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-
-//        if ("OPTIONS".equalsIgnoreCase(request.getMethod())) {
-//            filterChain.doFilter(request, response);
-//            return;
-//        }
-
         var token = this.recoverytoken(request);
-
-        //Solicita a validação do token recebido
         var login = tokenService.validateToken(token);
 
-        //caso passe da validação entra nesse if
         if(login != null){
-            //Recupera dados do BD
             UserModel user = userRepository.findByEmail(login).orElseThrow(() -> new UsernameNotFoundException("E-mail not found"));
-
-            //Cria lista de permissao que o usuario pode fazer logado
             var authority = Collections.singletonList(new SimpleGrantedAuthority("Role_User"));
-
-            //Cria um objeto de autenticado
             var authentication = new UsernamePasswordAuthenticationToken(user, null, authority);
-
-            //libera a autenticacao para acesso do spring via @AuthenticationPrincipal ou SecurityContextHolder.getContext().getAuthentication().
             SecurityContextHolder.getContext().setAuthentication(authentication);
         }
-        //contiua o fluxo da requisão para nao haver trava
         filterChain.doFilter(request, response);
     }
-
-    //Metodo para realiza a recuperação do token
     private String recoverytoken(HttpServletRequest request){
         var authHeader = request.getHeader("Authorization");
         if(authHeader == null){ return null; }
